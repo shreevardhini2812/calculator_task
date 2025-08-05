@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+<body>
+    <h1 class="text-[40px] text-center pt-10">Income Expense Calculator</h1>
+
+
+    <div class="pl-105">
+        <div class="flex flex-col gap-10 w-[500px] h-[300px] pt-10">
+            <input class="border p-5 rounded" id="income" type="number" placeholder="Enter Income"/>
+            <input class="border p-5 rounded" id="desc" type="text" placeholder="Enter Description"/>
+            <input class="border p-5 rounded" id="expense" type="number" placeholder="Enter Expense"/>
+        </div>
+
+        <div class="pt-20 pl-50">
+            <button class="border p-5 rounded-xl btn" id="submit">Submit</button>
+        </div>
+
+
+    </div>
+    
+    <div id="main"></div>
+
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
