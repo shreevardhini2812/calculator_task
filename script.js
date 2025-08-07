@@ -1,26 +1,16 @@
-let type = document.getElementById("type");
+let selectedvalue = document.getElementById("selectedvalue");
 let desc = document.getElementById("desc");
 let amount = document.getElementById("amount");
 
 
-
-let all_radio = document.getElementById("all_radio");
-let income_radio = document.getElementById("income_radio");
-let expense_radio = document.getElementById("expense_radio");
-let datadisplay = document.getElementById("datadisplay");
-
-
-
-let editbtn = document.getElementById("editbtn");
-let deletebtn = document.getElementById("deletebtn");
+const filter_btn = document.querySelectorAll('input[name="category"]');
+const datadisplay = document.getElementById('datadisplay');
 
 
 
 
 let maincontainer = document.getElementById("main");
 let main2container = document.getElementById("main2");
-let listelement = document.createElement("div");
-let listcontainer = document.getElementById("listcont");
 
 
 
@@ -40,7 +30,9 @@ let arr2=[];
 submit.addEventListener("click",()=>{
     
     const alldetails = {
-        type_value :  type.value,
+    
+        selectedvalue_value:selectedvalue.value,
+        
         desc_value : desc.value,
         amount_value : amount.value,
     };
@@ -48,11 +40,14 @@ submit.addEventListener("click",()=>{
     arr.push(alldetails);
 
     card.innerHTML +=`
-    <span class="flex flex-row gap-15 pt-10">
-    <div>${alldetails.type_value}</div>
+    <div class="pt-5 p-5">
+    <div class="flex flex-row gap-15 pl-130 font-semibold">
+    
+    <div>${alldetails.selectedvalue_value}</div>
     <div>${alldetails.desc_value}</div>
     <div>${alldetails.amount_value}</div>
-    </span>
+    </div>
+    </div>
     `;
     // console.log(arr);
     // console.log(typeof(alldetails.amount_value));
@@ -61,12 +56,12 @@ submit.addEventListener("click",()=>{
     
     while(i<arr.length)
     {
-    if((alldetails.type_value) == "income"){
+    if(alldetails.selectedvalue_value == "Income"){
         incomeres = incomeres + Number((alldetails.amount_value));
         //console.log(typeof(incomeres));
        
     }
-    else if((alldetails.type_value) == "expense")
+    else if(alldetails.selectedvalue_value == "Expense")
     {
         expenseres = expenseres + Number((alldetails.amount_value));
         
@@ -80,81 +75,70 @@ submit.addEventListener("click",()=>{
     }
 
     card1.innerHTML +=`
-    <div class="flex flex-row gap-10">
-    <div>Total Income : </div>
-    <div>${incomeres-expenseres}</div>
-    <div>Total Expense : </div>
-    <div>${expenseres}</div>
-    <div>Net Balance : </div>
-    <div>${netbalance}</div>
+    <div class="pt-10 p-3 card1des shadow">
+    <div class="flex flex-row gap-10 pl-100 card1des">
+    <div class="font-bold card1des">Total Income : </div>
+    <div class="card1des">${incomeres-expenseres}</div>
+    <div class="font-bold card1des">Total Expense : </div>
+    <div class="card1des">${expenseres}</div>
+    <div class="font-bold card1des">Net Balance : </div>
+    <div class="card1des">${netbalance}</div>
+    </div>
     </div>
     `;
 
     let arr2=[];
-    all_radio.addEventListener("click",()=>{
-   
-    let alldetails2 = alldetails;
-    console.log(alldetails2);
-    arr2=arr;
-    console.log(arr2);
-    card2.innerHTML +=`
-    <div class = "font-semibold pl-120 flex flex-row pt-10 gap-15">
-    <div>All Details</div>
-    <div>${alldetails2.type_value}</div>
-    <div>${alldetails2.desc_value}</div>
-    <div>${alldetails2.amount_value}</div>
+    arr2.push(alldetails);
+
+    function displaydata(filtereddata) {
+  datadisplay.innerHTML += " ";
+  filtereddata.forEach(item => {
+    const divs = document.createElement('div');
+    divs.textContent = " ";
+    divs.innerHTML += `
+    <div class="pl-110">
+    <div class="shadow-xl radiodet flex flex-row gap-10">
+    Type: ${item.selectedvalue_value}   Description: ${item.desc_value}   Amount: ${item.amount_value}
+    </div>
     </div>
     `;
-});
-
-
-income_radio.addEventListener("click",()=>{
+    datadisplay.innerHTML +=`
     
-    let alldetails2 = alldetails;
-    console.log(alldetails2);
-    arr2=arr;
-    console.log(arr2);
-    if(alldetails2.type_value=="income")
-    {
-    card2.innerHTML +=`
-    <div class = "font-semibold pl-120 flex flex-row pt-10 gap-15">
-    <div>Income Details</div>
-    <div>${alldetails2.type_value}</div>
-    <div>${alldetails2.desc_value}</div>
-    <div>${alldetails2.amount_value}</div>
-    </div>
+    <br/>
     `;
-    }
+    datadisplay.append(divs);
+  });
+}
+
+function filterdata(filtervalue) {
+  let filtereddata = arr2;
+
+  if (filtervalue === "Income") {
+    filtereddata = arr2.filter(item => item.selectedvalue_value == "Income");
+  } else if (filtervalue === "Expense") {
+    filtereddata = arr2.filter(item => item.selectedvalue_value == "Expense");
+  }
+  else{
+    console.log("click any radio button");
+  }
+
+  displaydata(filtereddata);
+}
+
+
+filter_btn.forEach(buttons => {
+  buttons.addEventListener('change', () => {
+    
+    filterdata(buttons.value);
+  });
 });
-
-
-
-expense_radio.addEventListener("click",()=>{
-   
-    let alldetails2 = alldetails;
-    console.log(alldetails2);
-    arr2=arr;
-    console.log(arr2);
-    if(alldetails2.type_value=="expense")
-    {
-    card2.innerHTML +=`
-    <div class = "font-semibold pl-120 flex flex-row pt-10 gap-15">
-    <div>Expense Details</div>
-    <div>${alldetails2.type_value}</div>
-    <div>${alldetails2.desc_value}</div>
-    <div>${alldetails2.amount_value}</div>
-    </div>
-    `;
-    }
-});
-
-
 });
 
 submit.addEventListener("click",()=>{
-    type.value="";
+    selectedvalue.value="";
     desc.value="";
     amount.value="";
 });
+
 
 maincontainer.append(card,card1,card2);

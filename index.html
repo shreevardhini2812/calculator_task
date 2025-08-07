@@ -14,7 +14,17 @@
 
     <div class="pl-105">
         <div class="flex flex-col gap-10 w-[500px] h-[300px] pt-10">
-            <input class="border p-5 rounded" id="type" type="text" placeholder="Enter Type - Income / Expense"/>
+            <div>
+                <label>Choose Type : </label>
+
+                <select id="selectedvalue">
+                <option value="Income" id="Income">Income</option>
+                <option value="Expense" id="Expense">Expense</option>
+                
+                </select>
+            
+            </div>
+
             <input class="border p-5 rounded" id="desc" type="text" placeholder="Enter Description"/>
             <input class="border p-5 rounded" id="amount" type="number" placeholder="Enter Amount"/>
         </div>
@@ -25,10 +35,10 @@
 
 
     </div>
-    <div class="flex flex-row pl-120 pt-10 gap-10">
-        <input type="radio" name="category" value="all" id="all_radio">All</input>
-        <input type="radio" name="category" value="income" id="income_radio">Income</input>
-        <input type="radio" name="category" value="expense" id="expense_radio">Expense</input>
+    <div class="flex flex-row pl-120 pt-10 gap-10" id="filter_btn">
+        <input type="radio" name="category" value="All" id="all_radio">All</input>
+        <input type="radio" name="category" value="Income" id="income_radio">Income</input>
+        <input type="radio" name="category" value="Expense" id="expense_radio">Expense</input>
     </div>
     <div id="datadisplay"></div>
     
