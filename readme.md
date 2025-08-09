@@ -5,7 +5,7 @@ This Income Expense Calculator is built using HTML, CSS and Javascript.
 
 1) In this Calculator there are three input fields to get income and expense details.
 2) They are Type, Description and Amount.
-3) The Type input field is of dropdown, which contains values namely, Income and Expense. 
+3) The Type field is of radio button, which contains values namely, Income and Expense. 
 3) Once all the values are entered and submit is clicked then the entries will be displayed on screen.
 4) And with this n number of inputs can created.
 5) There is also three radio buttons namely all, income and expense.

@@ -9,43 +9,45 @@
 
 </head>
 <body>
-    <h1 class="text-[40px] text-center pt-10">Income Expense Calculator</h1>
-
-
-    <div class="pl-105">
-        <div class="flex flex-col gap-10 w-[500px] h-[300px] pt-10">
-            <div>
-                <label>Choose Type : </label>
-
-                <select id="selectedvalue">
-                <option value="Income" id="Income">Income</option>
-                <option value="Expense" id="Expense">Expense</option>
-                
-                </select>
-            
+    <div class="container pt-10">
+        <h1 class="font-bold text-[40px] text-center">Income Expense Calculator</h1>
+        <div class="flex gap-40 pt-10 p-10 justify-center items-center flex-row ">
+            <div class="flex gap-5">
+                <h3 class="font-semibold">Income : </h3>
+                <p id="totalIncome" class="font-semibold">0</p>
             </div>
-
-            <input class="border p-5 rounded" id="desc" type="text" placeholder="Enter Description"/>
-            <input class="border p-5 rounded" id="amount" type="number" placeholder="Enter Amount"/>
+            <div class="flex gap-5">
+                <h3 class="font-semibold">Expenses : </h3>
+                <p id="totalExpense" class="font-semibold">0</p>
+            </div>
+            <div class="flex gap-5">
+                <h3 class="font-semibold">Net Balance : </h3>
+                <p id="netBalance" class="font-semibold">0</p>
+            </div>
         </div>
 
-        <div class="pt-20 pl-50">
-            <button class="border p-5 rounded-xl btn" id="submit">Submit</button>
+        <form id="transactionForm">
+            <div class="flex flex-row gap-10 justify-center pt-15 p-10">
+                <label><input type="radio" name="type" value="income"> Income</label>
+                <label><input type="radio" name="type" value="expense"> Expense</label>
+            </div>
+            <div class="pl-100 flex flex-col gap-5">
+                <input class="inputdes" type="text" id="description" placeholder="Enter Description">
+                <input class="inputdes" type="number" id="amount" placeholder=" Enter Amount">
+            </div>
+            <div class="pl-150 pt-10">
+                <button class="btn" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div class="filters flex flex-row gap-10 pt-10 pl-130">
+            <label><input type="radio" name="filter" value="all" checked> All</label>
+            <label><input type="radio" name="filter" value="income"> Income</label>
+            <label><input type="radio" name="filter" value="expense"> Expense</label>
         </div>
 
-
+        <div class="list" id="transactionList"></div>
     </div>
-    <div class="flex flex-row pl-120 pt-10 gap-10" id="filter_btn">
-        <input type="radio" name="category" value="All" id="all_radio">All</input>
-        <input type="radio" name="category" value="Income" id="income_radio">Income</input>
-        <input type="radio" name="category" value="Expense" id="expense_radio">Expense</input>
-    </div>
-    <div id="datadisplay"></div>
-    
-    <div id="listcont"></div>
-    <div id="main"></div>
-    <div id="main2"></div>
-    
 
     <script src="script.js"></script>
     

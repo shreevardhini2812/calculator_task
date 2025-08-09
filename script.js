@@ -1,144 +1,55 @@
-let selectedvalue = document.getElementById("selectedvalue");
-let desc = document.getElementById("desc");
-let amount = document.getElementById("amount");
-
-
-const filter_btn = document.querySelectorAll('input[name="category"]');
-const datadisplay = document.getElementById('datadisplay');
-
-
-
-
-let maincontainer = document.getElementById("main");
-let main2container = document.getElementById("main2");
-
-
-
-let submit = document.getElementById("submit");
-let card = document.createElement("div");
-let card1 = document.createElement("div");
-let card2 = document.createElement("div");
-
-
-
-let i=0;
-    let incomeres=0;
-    let expenseres=0;
-    let netbalance=0;
-let arr=[];
-let arr2=[];
-submit.addEventListener("click",()=>{
-    
-    const alldetails = {
-    
-        selectedvalue_value:selectedvalue.value,
+const transactions = [];
         
-        desc_value : desc.value,
-        amount_value : amount.value,
-    };
 
-    arr.push(alldetails);
+const form = document.getElementById('transactionForm');
+const description = document.getElementById('description');
+const amount = document.getElementById('amount');
+const totalIncome = document.getElementById('totalIncome');
+const totalExpense = document.getElementById('totalExpense');
+const netBalance = document.getElementById('netBalance');
+const transactionList = document.getElementById('transactionList');
+const filters = document.querySelectorAll('input[name="filter"]');
 
-    card.innerHTML +=`
-    <div class="pt-5 p-5">
-    <div class="flex flex-row gap-15 pl-130 font-semibold">
-    
-    <div>${alldetails.selectedvalue_value}</div>
-    <div>${alldetails.desc_value}</div>
-    <div>${alldetails.amount_value}</div>
-    </div>
-    </div>
-    `;
-    // console.log(arr);
-    // console.log(typeof(alldetails.amount_value));
-
-
-    
-    while(i<arr.length)
-    {
-    if(alldetails.selectedvalue_value == "Income"){
-        incomeres = incomeres + Number((alldetails.amount_value));
-        //console.log(typeof(incomeres));
-       
-    }
-    else if(alldetails.selectedvalue_value == "Expense")
-    {
-        expenseres = expenseres + Number((alldetails.amount_value));
-        
-    }
-    else{
-        console.log("enter the value");
-    }
-    netbalance = incomeres-expenseres;
-    i++;
-    
-    }
-
-    card1.innerHTML +=`
-    <div class="pt-10 p-3 card1des shadow">
-    <div class="flex flex-row gap-10 pl-100 card1des">
-    <div class="font-bold card1des">Total Income : </div>
-    <div class="card1des">${incomeres-expenseres}</div>
-    <div class="font-bold card1des">Total Expense : </div>
-    <div class="card1des">${expenseres}</div>
-    <div class="font-bold card1des">Net Balance : </div>
-    <div class="card1des">${netbalance}</div>
-    </div>
-    </div>
-    `;
-
-    let arr2=[];
-    arr2.push(alldetails);
-
-    function displaydata(filtereddata) {
-  datadisplay.innerHTML += " ";
-  filtereddata.forEach(item => {
-    const divs = document.createElement('div');
-    divs.textContent = " ";
-    divs.innerHTML += `
-    <div class="pl-110">
-    <div class="shadow-xl radiodet flex flex-row gap-10">
-    Type: ${item.selectedvalue_value}   Description: ${item.desc_value}   Amount: ${item.amount_value}
-    </div>
-    </div>
-    `;
-    datadisplay.innerHTML +=`
-    
-    <br/>
-    `;
-    datadisplay.append(divs);
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const type = document.querySelector('input[name="type"]:checked').value;
+  transactions.push({
+      description: description.value,
+      amount: parseFloat(amount.value),
+      type
   });
-}
+  description.value = '';
+  amount.value = '';
+  renderTransactions();
+});
 
-function filterdata(filtervalue) {
-  let filtereddata = arr2;
+filters.forEach(filter => {
+    filter.addEventListener('change', renderTransactions);
+ });
 
-  if (filtervalue === "Income") {
-    filtereddata = arr2.filter(item => item.selectedvalue_value == "Income");
-  } else if (filtervalue === "Expense") {
-    filtereddata = arr2.filter(item => item.selectedvalue_value == "Expense");
-  }
-  else{
-    console.log("click any radio button");
-  }
+function renderTransactions() {
+    const filter = document.querySelector('input[name="filter"]:checked').value;
+    transactionList.innerHTML = '';
 
-  displaydata(filtereddata);
-}
+    let incomeTotal = 0;
+    let expenseTotal = 0;
 
-
-filter_btn.forEach(buttons => {
-  buttons.addEventListener('change', () => {
-    
-    filterdata(buttons.value);
+    transactions.filter(t => filter === 'all' || t.type === filter).forEach(t => {
+      const div = document.createElement('div');
+      div.classList.add('item');
+     div.innerHTML = `<span>${t.description}</span><span class="${t.type}">${t.type === 'income' ? '+' : '-'}${t.amount}</span>`;
+     transactionList.appendChild(div);
   });
-});
-});
 
-submit.addEventListener("click",()=>{
-    selectedvalue.value="";
-    desc.value="";
-    amount.value="";
-});
+  transactions.forEach(t => {
+      if (t.type === 'income') {
+          incomeTotal += t.amount;
+      } else {
+           expenseTotal += t.amount;
+       }
+  });
 
-
-maincontainer.append(card,card1,card2);
+totalIncome.textContent = `${incomeTotal}`;
+totalExpense.textContent = `${expenseTotal}`;
+netBalance.textContent = `${(incomeTotal - expenseTotal)}`;
+        }
